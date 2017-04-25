@@ -2,8 +2,8 @@
 import time
 from slackclient import SlackClient
 
-BOT_TOKEN = "token"
-CHANNEL_NAME = "channel"
+BOT_TOKEN = ""
+CHANNEL_NAME = ""
 
 def main():
     sc = SlackClient(BOT_TOKEN)
@@ -14,13 +14,16 @@ def main():
         sc.rtm_send_message(CHANNEL_NAME, "Я снова жив!!!")
 
         while True:
-            # читаем сообщения 
+            # читаем сообщения
             for slack_message in sc.rtm_read():
                 message = slack_message.get("text")
+                print message
+                test = 'bender'
                 user = slack_message.get("user")
-                if not message or not user:
+                if  message == None or user == None:
                     continue
-                sc.rtm_send_message(CHANNEL_NAME, "<@{}> отвали от меня , я ничего не умею еще".format(user))
+                elif test in message.lower():
+                    sc.rtm_send_message(CHANNEL_NAME, "<@{}> отвали от меня , я ничего не умею еще".format(user))
             # спим неного
             time.sleep(0.5)
     else:
